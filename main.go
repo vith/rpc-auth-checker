@@ -29,21 +29,15 @@ func main() {
 	log.Fatal(http.ListenAndServe("127.0.0.1:30303", nil))
 }
 
-type UserPassReqRecord struct {
-	User string
-	Pass string
-}
-
 func loginHandler(w http.ResponseWriter, req *http.Request) {
 	req.ParseForm()
 	user := req.PostFormValue("user")
 	pass := req.PostFormValue("pass")
 
-	args := UserPassReqRecord{User: user, Pass: pass}
-
+	rpcArgs := []interface{}{user, pass}
 	var result bool
 
-	err := rpcClient.Call("Auth.CheckUserPass", &args, &result)
+	err := rpcClient.Call("checkAuthentication", rpcArgs, &result)
 	if err != nil {
 		panic(err)
 	}

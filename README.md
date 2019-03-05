@@ -1,6 +1,6 @@
 ```console
 # run http server
-RPC_ENDPOINT=http://localhost:10030 go run .
+$ RPC_ENDPOINT=http://localhost:10030 go run .
 ```
 
 ```console
