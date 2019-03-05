@@ -12,6 +12,7 @@ jobs:
       - image: circleci/golang:1
     requires:
       - test
+    context: release
     steps:
       - checkout
       - run: curl -sL https://git.io/goreleaser | bash
