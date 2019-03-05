@@ -10,9 +10,6 @@ jobs:
   release:
     docker:
       - image: circleci/golang:1
-    requires:
-      - test
-    context: release
     steps:
       - checkout
       - run: curl -sL https://git.io/goreleaser | bash
@@ -21,9 +18,11 @@ workflows:
   version: 2
   release:
     jobs:
+      - test
       - release:
+          requires:
+            - test
+          context: release
           filters:
-            branches:
-              ignore: /.*/
             tags:
-              only: /v[0-9]+(\.[0-9]+)*(-.*)*/
+              only: /^v.*/
