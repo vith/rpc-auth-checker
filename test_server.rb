@@ -4,8 +4,15 @@ require "xmlrpc/server"
 
 s = XMLRPC::Server.new(10030)
 
+SuccessfulAuth = Struct.new(:result, :account)
+UnsuccessfulAuth = Struct.new(:error)
+
 s.add_handler("checkAuthentication") do |user, pass|
-	user == 'foo' && pass == 'bar'
+	if user == 'foo' && pass == 'bar'
+		SuccessfulAuth.new("Success", "someaccount")
+	else
+		UnsuccessfulAuth.new("Invalid password")
+	end
 end
 
 s.set_default_handler do |name, *args|
