@@ -18,6 +18,11 @@ func main() {
 		panic("set RPC_ENDPOINT environment variable to a URL")
 	}
 
+	listenAddr := os.Getenv("LISTEN_ADDR")
+	if listenAddr == "" {
+		panic("set LISTEN_ADDR environment variable to a host:port")
+	}
+
 	client, err := xmlrpc.NewClient(rpcEndpoint, nil)
 	if err != nil {
 		panic(err)
@@ -26,7 +31,7 @@ func main() {
 
 	http.HandleFunc("/login", loginHandler)
 
-	log.Fatal(http.ListenAndServe("127.0.0.1:30303", nil))
+	log.Fatal(http.ListenAndServe(listenAddr, nil))
 }
 
 func loginHandler(w http.ResponseWriter, req *http.Request) {
