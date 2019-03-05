@@ -9,4 +9,4 @@ build:
     - amd64
 
 release:
-  draft: true
+  draft: false
